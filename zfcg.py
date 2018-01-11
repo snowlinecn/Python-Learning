@@ -1,5 +1,6 @@
 import requests
 import csv
+import time
 from bs4 import BeautifulSoup
 
 
@@ -48,4 +49,5 @@ if __name__ == '__main__':
     url = 'http://www.ccgp-qinghai.gov.cn/html/jrkb/jrkb_more.html'
     html = get_content(url)
     result = get_data(html)
-    write_data(result, 'kaibiao.csv')
+    kbdate = time.strftime('%Y-%m-%d', time.localtime(time.time())) # 取得当前日期
+    write_data(result, 'kaibiao' + kbdate + '.csv') # 生成开标项目文档
