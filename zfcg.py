@@ -4,11 +4,11 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_content(url, data = None):
+def get_content(url, data=None):
 
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0)'}
 
-    rep = requests.get(url, headers = header)
+    rep = requests.get(url, headers=header)
     rep.encoding = 'utf-8'
     return rep.text
 
@@ -40,14 +40,14 @@ def get_data(html_text):
 
 def write_data(data, name):
     file_name = name
-    with open(file_name, 'w', errors = 'ignore', encoding = 'utf-8-sig', newline = '') as f :
+    with open(file_name, 'w', errors='ignore', encoding='utf-8-sig', newline='') as f:
         f_csv = csv.writer(f)
         f_csv.writerows(data)
 
 
 if __name__ == '__main__':
-    URL = 'http://www.ccgp-qinghai.gov.cn/html/jrkb/jrkb_more.html'
-    html = get_content(URL)
+    url = 'http://www.ccgp-qinghai.gov.cn/html/jrkb/jrkb_more.html'
+    html = get_content(url)
     result = get_data(html)
-    kbdate = time.strftime('%Y-%m-%d', time.localtime(time.time())) # 取得当前日期
-    write_data(result, 'kaibiao' + kbdate + '.csv') # 生成开标项目文档
+    date = time.strftime('%Y-%m-%d', time.localtime(time.time()))  # 取得当前日期
+    write_data(result, 'kaibiao' + date + '.csv')  # 生成开标项目文档
