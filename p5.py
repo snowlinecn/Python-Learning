@@ -1,4 +1,5 @@
 from tkinter import *
+
 master = Tk()
 Label(master, text="First").grid(row=0, sticky = W)
 Label(master, text="Second").grid(row=1, sticky = W)
