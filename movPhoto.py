@@ -46,7 +46,7 @@ def movePhoto(path,dst):
                 m = m + 1
                 pass
     
-    print("共移动" ,n-1,"文件，",m,"个文件未移动")
+    print("共移动" ,n-1,"个文件，",m,"个文件未移动")
 
 def main():
     
