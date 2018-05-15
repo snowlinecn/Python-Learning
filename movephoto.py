@@ -1,17 +1,25 @@
-# 处理照片Exif信息
+''' 处理照片Exif信息 '''
 
 import exifread
 import os
 import sys
 import shutil
 
+# 文件打开失败异常
+class OpenFailException(Exception):
+    pass
+
 # 读取EXIF信息
 def get_photoexif(filename):
-    fd = open(filename,'rb')
+    try:
+        fd = open(filename,'rb')
+    except:
+        raise OpenFailException("不能打开文件[%s]\n" % filename)
     tags = exifread.process_file(fd)
     fd.close()
     return(tags)
 
+# 移动照片
 def move_photo(path,dst):
     n = 1
     m = 0
