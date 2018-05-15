@@ -51,7 +51,7 @@ def move_photo(path,dst):
 def main():
     
     msg = '''使用方法：
-        python movePhoto.py 源文件夹 目标文件夹
+        python movephoto.py 源文件夹 目标文件夹
         '''
     
     if len(sys.argv) < 3:
