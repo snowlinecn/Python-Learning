@@ -6,13 +6,13 @@ import sys
 import shutil
 
 # 读取EXIF信息
-def getPhotoExif(filename):
+def get_photoexif(filename):
     fd = open(filename,'rb')
     tags = exifread.process_file(fd)
     fd.close()
     return(tags)
 
-def movePhoto(path,dst):
+def move_photo(path,dst):
     n = 1
     m = 0
     for root, dirs, files in os.walk(path):
@@ -21,7 +21,7 @@ def movePhoto(path,dst):
             f,ext = os.path.splitext(filename)
             if ext.lower() not in ('.jpg','.png','.mp4','.gif'):
                 continue
-            tags = getPhotoExif(filename)
+            tags = get_photoexif(filename)
             #print("----------------------------------------------------------------")            
             try:
                 date = str(tags['EXIF DateTimeOriginal']).replace(":","-")[:10]
@@ -57,7 +57,7 @@ def main():
     if len(sys.argv) < 3:
         print(msg)
     else:
-        movePhoto(sys.argv[1],sys.argv[2])
+        move_photo(sys.argv[1],sys.argv[2])
     
 if __name__ == '__main__':
     
