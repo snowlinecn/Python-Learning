@@ -33,21 +33,15 @@ def move_photo(path,dst):
             #print("----------------------------------------------------------------")            
             try:
                 date = str(tags['EXIF DateTimeOriginal']).replace(":","-")[:10]
-
-                #pwd = root + "\\" + date
                 year = date[0:4]
                 yearpath = dst+"\\"+year
-
-                if not os.path.exists(yearpath):
+                if not os.path.exists(yearpath):    # 生成年份文件夹
                     os.mkdir(yearpath)
-                
                 daypath = yearpath+"\\"+date
-
-                if not os.path.exists(daypath):
+                if not os.path.exists(daypath): #   生成'年-月-日'文件夹
                     os.mkdir(daypath)
-                
-                shutil.move(filename,daypath)
-                print(n,filename+"  ----->  "+daypath)
+                shutil.move(filename,daypath)   # 移动文件到目标文件夹
+                print(n,filename+"  ----->  "+daypath)        
                 n = n + 1
             except:
                 print("照片",filename,"没有EXIF数据")
