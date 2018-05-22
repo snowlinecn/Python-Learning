@@ -14,19 +14,22 @@ class MainWindow(Frame):
         self.grid(padx=10, pady=10)
         
         self.slb = Label(self,text = '照片所在文件夹')
-        self.slb.grid(row=0,column=1,sticky=W)
+        self.slb.grid(row=0,column=1, sticky=W)
 
         self.dlb = Label(self,text = '照片移动到文件夹')
-        self.dlb.grid(row=1,column=1,sticky=W)
+        self.dlb.grid(row=1,column=1, sticky=W)
 
         self.sbtn = Button(self,text="原照片文件夹",command=self.spwd)
-        self.sbtn.grid(row=0,column=0,sticky=W)
+        self.sbtn.grid(row=0,column=0, sticky=W)
 
         self.dbtn = Button(self,text="移动到文件夹",command=self.dpwd)
-        self.dbtn.grid(row=1,column=0,sticky=W)
+        self.dbtn.grid(row=1,column=0, sticky=W)
+        
+        self.mvtn = Button(self, text="移动", command=self.move_photo)
+        self.mvtn.grid(row=2, column=0, sticky=W)
 
         self.txt = Text(self)
-        self.txt.grid(row=2,column=0,columnspan=2,sticky=W)
+        self.txt.grid(row=3,column=0,columnspan=2, sticky=W)
 
     def spwd(self):
         spath = tkinter.filedialog.askdirectory()
@@ -37,7 +40,9 @@ class MainWindow(Frame):
         dpath = tkinter.filedialog.askdirectory()
         if dpath != '':
             self.dlb.config(text = dpath)
-  
+    def move_photo(self):
+        pass
+    
 app = MainWindow()
 app.master.title('照片整理工具 V0.9')
 app.master.geometry('500x300')
