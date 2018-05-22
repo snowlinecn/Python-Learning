@@ -2,6 +2,10 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import scrolledtext
 import tkinter.filedialog
+import exifread
+import os
+import sys
+import shutil
 
 class Main(Frame):
     
@@ -13,6 +17,21 @@ class Main(Frame):
         self.dpath = ""
         self.create_widgets()
 
+    # 文件打开失败异常
+    class OpenFailException(Exception):
+        pass
+
+    # 读取EXIF信息
+    def get_photoexif(self, filename):
+        try:
+            fd = open(filename,'rb')
+        except:
+            raise OpenFailException("不能打开文件[%s]\n" % filename)
+        tags = exifread.process_file(fd)
+        fd.close()
+        return(tags)
+
+    # 生成用户界面
     def create_widgets(self):
         self.grid(padx=10, pady=10)
         self.slb = Label(self, text=self.spath, justify="left", width=65, borderwidth=1, relief=SUNKEN)
@@ -30,22 +49,57 @@ class Main(Frame):
         self.scr = scrolledtext.ScrolledText(self, width=80, height=18) 
         self.scr.grid(row=3, column=0, columnspan=2)
 
+    # 设置源路径
     def set_spath(self):
-        self.spath = tkinter.filedialog.askdirectory()
+        self.spath = tkinter.filedialog.askdirectory().replace("/", "\\")
         if self.spath != "":
             self.slb.config(text=self.spath)
         else:
             self.slb.config(text="请选择照片文件夹")
 
+    # 设置目标路径
     def set_dpath(self):
-        self.dpath = tkinter.filedialog.askdirectory()
+        self.dpath = tkinter.filedialog.askdirectory().replace("/", "\\")
         if self.dpath != "":
             self.dlb.config(text=self.dpath)
         else:
             self.dlb.config(text="请选择目标文件夹")
-            
+
+    # 移动照片            
     def move_photo(self):
-        self.scr.insert(END, "照片将被移动到")
+        if self.spath != "" and self.dpath != "":
+            n = 1
+            m = 0
+            for root, dirs, files in os.walk(self.spath):
+                for filename in files:
+                    filename = os.path.join(root,filename)
+                    f,ext = os.path.splitext(filename)
+                    if ext.lower() not in ('.jpg','.png','.mp4','.gif'):
+                        continue
+                    tags = self.get_photoexif(self, filename)
+                    try:
+                        date = str(tags['EXIF DateTimeOriginal']).replace(":","-")[:10]
+                        year = date[0:4]
+                        yearpath = self.dpath + "\\" + year
+                        if not os.path.exists(yearpath):    # 生成年份文件夹
+                            os.mkdir(yearpath)
+                        daypath = yearpath + "\\" + date
+                        if not os.path.exists(daypath): #   生成'年-月-日'文件夹
+                            os.mkdir(daypath)
+                        # shutil.move(filename,daypath)   # 移动文件到目标文件夹
+                        msg = str(n) + filename + "  ----->  " + daypath
+                        self.scr.insert(END, msg)        
+                        n = n + 1
+                    except:
+                        msg = "照片" + filename + "没有EXIF数据"
+                        self.scr.insert(END, msg)
+                        m = m + 1
+                        pass
+            
+            msg = "共移动" + str(n-1) + "个文件，" +str(m) + "个文件未移动"
+            self.scr.insert(END, msg)
+        else:
+            self.scr.insert(END, "您还未选择照片文件夹！\n")
         self.scr.see(END)
     
 app = Main()
