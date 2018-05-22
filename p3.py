@@ -20,16 +20,16 @@ class MainWindow(Frame):
         self.dlb = Label(self,text = '')
         self.dlb.grid(row=1,column=1, sticky=W)
 
-        self.sbtn = Button(self,text="请选择照片位置",command=self.spwd)
+        self.sbtn = Button(self,text="选择照片位置",width=15,command=self.spwd)
         self.sbtn.grid(row=0,column=0, sticky=W)
 
-        self.dbtn = Button(self,text="请选择移动到...",command=self.dpwd)
+        self.dbtn = Button(self,text="选择移动到...",width=15,command=self.dpwd)
         self.dbtn.grid(row=1,column=0, sticky=W)
         
-        self.mvtn = Button(self, text="移动", command=self.move_photo)
+        self.mvtn = Button(self, text="移动",width=15, command=self.move_photo)
         self.mvtn.grid(row=2, column=0, sticky=W)
 
-        self.scr = scrolledtext.ScrolledText(self, width=80, height=10) 
+        self.scr = scrolledtext.ScrolledText(self, width=80, height=18) 
         self.scr.grid(row=3, column=0, columnspan=2)
 
     def spwd(self):
@@ -45,13 +45,12 @@ class MainWindow(Frame):
             return dpath
    
     def move_photo(self):
-        for i in range(0,1000):
-            self.scr.insert(END, str(i)+"\n")
+        # for i in range(0,1000):
+        #     self.scr.insert(END, str(i)+"\n")
+        self.scr.insert(END, "照片将被移动到")
         self.scr.see(END)
-
-
     
 app = MainWindow()
 app.master.title('照片整理工具 V0.9')
-app.master.geometry('600x300')
+app.master.geometry('600x350')
 app.mainloop()
