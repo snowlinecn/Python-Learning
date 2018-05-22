@@ -7,11 +7,12 @@ class MainWindow(Frame):
     
     def __init__(self, master=None):
         Frame.__init__(self, master)
+        self["padx"]=1
+        self["pady"]=1
         self.createWidgets()
 
     def createWidgets(self):
-        #self["padding"]=10
-        #, relief="solid", borderwidth=2)
+
         self.grid(padx=10, pady=10)
         
         self.slb = Label(self,text = '')
