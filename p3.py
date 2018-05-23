@@ -76,7 +76,7 @@ class Main(Frame):
                     f,ext = os.path.splitext(filename)
                     if ext.lower() not in ('.jpg','.png','.mp4','.gif'):
                         continue
-                    tags = self.get_photoexif(self, filename)
+                    tags = self.get_photoexif(filename)
                     try:
                         date = str(tags['EXIF DateTimeOriginal']).replace(":","-")[:10]
                         year = date[0:4]
@@ -86,17 +86,17 @@ class Main(Frame):
                         daypath = yearpath + "\\" + date
                         if not os.path.exists(daypath): #   生成'年-月-日'文件夹
                             os.mkdir(daypath)
-                        # shutil.move(filename,daypath)   # 移动文件到目标文件夹
-                        msg = str(n) + filename + "  ----->  " + daypath
+                        shutil.move(filename,daypath)   # 移动文件到目标文件夹
+                        msg = str(n) + ": " + filename + "  ----->  " + daypath + "\n"
                         self.scr.insert(END, msg)        
                         n = n + 1
                     except:
-                        msg = "照片" + filename + "没有EXIF数据"
+                        msg = "照片" + filename + "没有EXIF数据，未移动" + "\n"
                         self.scr.insert(END, msg)
                         m = m + 1
                         pass
             
-            msg = "共移动" + str(n-1) + "个文件，" +str(m) + "个文件未移动"
+            msg = "共移动" + str(n-1) + "个文件，" +str(m) + "个文件未移动" + "\n"
             self.scr.insert(END, msg)
         else:
             self.scr.insert(END, "您还未选择照片文件夹！\n")
