@@ -17,16 +17,12 @@ class Main(Frame):
         self.dpath = ""
         self.create_widgets()
 
-    # 文件打开失败异常
-    class OpenFailException(Exception):
-        pass
-
     # 读取EXIF信息
     def get_photoexif(self, filename):
         try:
             fd = open(filename,'rb')
         except:
-            raise OpenFailException("不能打开文件[%s]\n" % filename)
+            pass
         tags = exifread.process_file(fd)
         fd.close()
         return(tags)
