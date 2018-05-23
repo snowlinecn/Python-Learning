@@ -58,6 +58,7 @@ class Main(Frame):
             self.slb.config(text="请选择照片文件夹")
 
     # 设置目标路径
+
     def set_dpath(self):
         self.dpath = tkinter.filedialog.askdirectory().replace("/", "\\")
         if self.dpath != "":
@@ -96,7 +97,7 @@ class Main(Frame):
                         m = m + 1
                         pass
             
-            msg = "共移动" + str(n-1) + "个文件，" +str(m) + "个文件未移动" + "\n"
+            msg = "共" + str(m+n-1) + "个文件，移动" + str(n-1) + "个文件，" +str(m) + "个文件未移动" + "\n"
             self.scr.insert(END, msg)
         else:
             self.scr.insert(END, "您还未选择照片文件夹！\n")
