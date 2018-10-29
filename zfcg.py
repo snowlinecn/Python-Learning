@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 
 def get_content(url, data=None):
 
-    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0)'}
+    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko'}
 
-    rep = requests.get(url, headers=header)
+    rep = requests.get(url, headers=header, timeout=1000)
     rep.encoding = 'utf-8'
     return rep.text
 
