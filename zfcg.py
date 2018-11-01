@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 def get_content(url, data=None):
 
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0;\
-               rv:11.0) like Gecko'}
+rv:11.0) like Gecko'}
 
     rep = requests.get(url, headers=header, timeout=1000)
     rep.encoding = 'utf-8'
@@ -42,7 +42,7 @@ def get_data(html_text):
 def write_data(data, name):
     file_name = name
     with open(file_name, 'w', errors='ignore', encoding='utf-8-sig', newline=''
-              ) as f:
+) as f:
         f_csv = csv.writer(f)
         f_csv.writerows(data)
 
