@@ -13,9 +13,9 @@ url = "https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592\
 header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) \
 Gecko/20100101 Firefox/63.0"}
 
-r = requests.get(url, headers=header, timeout=3)
-r.encoding = "utf-8"
-r = r.text
+r = requests.get(url, headers=header, timeout=3).content.decode()
+# r.encoding = "utf-8"
+# r = r.text
 
 img_list = re.findall('"objURL":"(.*?)",', r)
 # print(img_list)
