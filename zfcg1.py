@@ -5,7 +5,6 @@ from lxml import etree
 
 
 def get_html(url, data=None):
-
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0;\
 rv:11.0) like Gecko'}
     rep = requests.get(url, headers=header, timeout=10)
@@ -28,7 +27,6 @@ def get_item(html):
 
 
 def write_item(data, file_name):
-    #file_name = name
     with open(file_name, 'w', errors='ignore', encoding='utf-8-sig', newline=''
 ) as f:
         f_csv = csv.writer(f)
