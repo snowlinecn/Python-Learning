@@ -7,12 +7,13 @@ from lxml import etree
 def get_html(url, data=None):
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0;\
 rv:11.0) like Gecko'}
-    rep = requests.get(url, headers=header, timeout=10)
-    if rep.status_code == 200:
-        rep.encoding = 'utf-8'
+    try:
+        rep = requests.get(url, headers=header, timeout=10)
+        rep.raise_for_status()  #如果响应状态不是200，引发HTTPError异常
+        rep.encoding = rep.apparent_encoding  #从内容分析出的响应内容编码方式
         return rep.text
-    else:
-        print("打开网站错误！")
+    except:
+        return None
 
 
 def get_item(html):
@@ -36,6 +37,9 @@ def write_item(data, file_name):
 if __name__ == '__main__':
     url = 'http://www.ccgp-qinghai.gov.cn/html/jrkb/jrkb_more.html'
     html = get_html(url)
-    item = get_item(html)
-    date = time.strftime('%Y-%m-%d', time.localtime(time.time()))  # 取得当前日期
-    write_item(item, 'item' + date + '.csv')  # 写入CSV文件
+    if html is not None:
+        item = get_item(html)
+        date = time.strftime('%Y-%m-%d', time.localtime(time.time()))  # 取得当前日期
+        write_item(item, 'item' + date + '.csv')  # 写入CSV文件
+    else:
+        print("网站错误！")
