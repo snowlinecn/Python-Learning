@@ -17,9 +17,9 @@ rv:11.0) like Gecko'}
 
 def get_item(html):
     data = etree.HTML(html)
-    date_list = data.xpath('//tr[1]/td[@width="155"]/text()')
-    name_list = data.xpath('//tr[1]/td[@width="295"]/text()')
-    address_list =data.xpath('//tr[2]/td[@width="295"]/text()')
+    date_list = data.xpath('//tr[1]/td[@width="155"]/text()')   #取得开标日期
+    name_list = data.xpath('//tr[1]/td[@width="295"]/text()')   #取得项目名称
+    address_list =data.xpath('//tr[2]/td[@width="295"]/text()') #取得开标地址
     item=[]
     for date, name, address in zip(date_list, name_list, address_list):
         item.append([date, name, address])
@@ -38,4 +38,4 @@ if __name__ == '__main__':
     html = get_html(url)
     item = get_item(html)
     date = time.strftime('%Y-%m-%d', time.localtime(time.time()))  # 取得当前日期
-    write_item(item, 'item' + date + '.csv')  # 生成开标项目文档
+    write_item(item, 'item' + date + '.csv')  # 写入CSV文件
