@@ -88,9 +88,9 @@ Gecko/20100101 Firefox/63.0", "Content-Type": "application/json"}
     # 打印中标公告信息    
     def zbgg_print(self): 
         for zbgg_adddr in self.zbgg_addrs:
-            html_text = requests.get(zbgg_adddr, headers=header, timeout=10).content.decode()
+            html_text = requests.get(zbgg_adddr, headers=self.headers, timeout=50).content.decode()
             html_text = html.unescape(html_text)
-            phzj = []
+            pbzj = []
             pbzj = re.findall(r'code-85005\\">(.*?)<', html_text) # 匹配评审专家名单
             if pbzj == [] :
                 pbzj = re.findall(r'名单：(.*?)十', html_text) # 匹配不规范页面中的评审专家名单
