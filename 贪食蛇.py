@@ -117,7 +117,7 @@ def main():
              gameOver()
 
         # 控制游戏速度
-        fpsClock.tick(15)
+        fpsClock.tick(5)
 
 #５　启动程序
 if __name__ == '__main__':
